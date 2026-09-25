@@ -1,81 +1,39 @@
-# Documentação do Agente
+# 📄 Documentação do Agente: BIA SafeGuard AI
 
-## Caso de Uso
+## 1. Definição do Caso de Uso
+### Contexto e Problema de Negócio
+Clientes de serviços financeiros frequentemente enfrentam dificuldades para monitorar oscilações em suas despesas, rastrear cobranças atípicas ou selecionar produtos de investimento compatíveis com seu perfil de risco. Além disso, a maioria dos assistentes virtuais do mercado opera de forma estritamente reativa.
 
-### Problema
-> Qual problema financeiro seu agente resolve?
-
-[Sua descrição aqui]
-
-### Solução
-> Como o agente resolve esse problema de forma proativa?
-
-[Sua descrição aqui]
-
-### Público-Alvo
-> Quem vai usar esse agente?
-
-[Sua descrição aqui]
+O **BIA SafeGuard AI** atua como um agente consultivo e preventivo, focado em gestão e mitigação de riscos:
+- **Monitoramento de Transações:** Analisa padrões de consumo (`transacoes.csv`) e emite alertas sobre movimentações que fogem ao comportamento padrão.
+- **Recomendação Estratégica:** Cruza as diretrizes do `perfil_investidor.json` com os ativos disponíveis em `produtos_financeiros.json` para sugerir alocações consistentes.
+- **Atendimento Contextualizado:** Utiliza o histórico de interações (`historico_atendimento.csv`) para garantir continuidade e precisão no suporte.
 
 ---
 
-## Persona e Tom de Voz
+## 2. Persona e Tom de Voz
+- **Identidade:** BIA SafeGuard
+- **Papel:** Assistente Consultiva de Governança e Proteção Financeira.
+- **Comunicação:**
+  - **Técnico e Objetivo:** Apresenta conceitos financeiros e normativos com clareza.
+  - **Didático:** Fundamenta recomendações com base em dados concretos, evitando tom imperativo.
+  - **Prudente:** Abstém-se de realizar projeções de rentabilidade garantida, respeitando o apetite a risco do cliente.
 
-### Nome do Agente
-[Nome escolhido]
-
-### Personalidade
-> Como o agente se comporta? (ex: consultivo, direto, educativo)
-
-[Sua descrição aqui]
-
-### Tom de Comunicação
-> Formal, informal, técnico, acessível?
-
-[Sua descrição aqui]
-
-### Exemplos de Linguagem
-- Saudação: [ex: "Olá! Como posso ajudar com suas finanças hoje?"]
-- Confirmação: [ex: "Entendi! Deixa eu verificar isso para você."]
-- Erro/Limitação: [ex: "Não tenho essa informação no momento, mas posso ajudar com..."]
+### Padrão de Interação:
+> ❌ **Inadequado:** "Compre essa ação agora, o rendimento é garantido este mês."
+> ✅ **Adequado:** "Considerando o seu perfil Conservador e o objetivo de compor uma reserva de emergência, o CDB de Liquidez Diária apresenta o alinhamento adequado entre segurança e disponibilidade."
 
 ---
 
-## Arquitetura
-
-### Diagrama
+## 3. Arquitetura da Solução
+A arquitetura adota o modelo de *Retrieval-Augmented Generation* (RAG) com injeção de contexto (*Prompt Anchoring*), garantindo que as respostas do LLM sejam fundamentadas em uma base de conhecimento controlada.
 
 ```mermaid
-flowchart TD
-    A[Cliente] -->|Mensagem| B[Interface]
-    B --> C[LLM]
-    C --> D[Base de Conhecimento]
-    D --> C
-    C --> E[Validação]
-    E --> F[Resposta]
-```
-
-### Componentes
-
-| Componente | Descrição |
-|------------|-----------|
-| Interface | [ex: Chatbot em Streamlit] |
-| LLM | [ex: GPT-4 via API] |
-| Base de Conhecimento | [ex: JSON/CSV com dados do cliente] |
-| Validação | [ex: Checagem de alucinações] |
-
----
-
-## Segurança e Anti-Alucinação
-
-### Estratégias Adotadas
-
-- [ ] [ex: Agente só responde com base nos dados fornecidos]
-- [ ] [ex: Respostas incluem fonte da informação]
-- [ ] [ex: Quando não sabe, admite e redireciona]
-- [ ] [ex: Não faz recomendações de investimento sem perfil do cliente]
-
-### Limitações Declaradas
-> O que o agente NÃO faz?
-
-[Liste aqui as limitações explícitas do agente]
+graph TD
+    A[Usuário] -->|Input| B[Interface - src/app.py]
+    B --> C[Orquestrador de Prompt]
+    C -->|Consulta| D[(Base de Dados - data/)]
+    D -->|Retorno de Dados| C
+    C -->|Contexto + Guardrails| E[Modelo LLM]
+    E -->|Resposta Validada| B
+    B -->|Output| A
