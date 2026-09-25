@@ -41,4 +41,19 @@ A documentação foi estruturada em módulos para facilitar a auditoria e o ente
 ├── docs/                    # Artefatos de documentação detalhada
 │   └── 01-documentacao-agente.md
 ├── src/                     # Código-fonte do protótipo funcional
-└── README.md                # Documentação principal
+└── README.md                # Documentação principal 
+```
+
+---
+
+## 🔒 Diretrizes de Segurança e Confiabilidade
+Para assegurar a integridade das respostas no domínio financeiro:
+
+Ancoragem em Contexto (Prompt Anchoring): Respostas geradas estritamente a partir das bases de dados locais (data/).
+
+Tratamento de Indisponibilidade (Fallback): Quando uma informação não consta na base, o agente declara a limitação explicitamente em vez de gerar dados sintéticos.
+
+Privacidade por Design: Tratamento de dados operacionais sem exposição indevida, simulando o mascaramento necessário para adequação às normativas de proteção de dados.
+
+👤 Autor
+Desenvolvido por Henrique Pereira Teixeira como parte do bootcamp DIO.
