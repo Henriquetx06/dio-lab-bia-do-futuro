@@ -9,15 +9,26 @@
 ## 📌 Visão Geral do Projeto
 O **BIA SafeGuard AI** é um protótipo de agente financeiro desenvolvido para explorar a transição de assistentes virtuais reativos para modelos consultivos e proativos.
 
-A solução analisa históricos de transações, hábitos de consumo e perfis de risco para identificar inconsistências, prever necessidades operacionais e recomendar produtos financeiros adequados, estruturada sobre **mecanismos de governança de dados e salvaguardas anti-alucinação**.
+A solução analisa históricos de transações, hábitos de consumo e perfis de risco para identificar inconsistências, prever necessidades operacionais e recomendar produtos financeiros adequados, operando sob rigorosos **mecanismos de governança de dados e salvaguardas anti-alucinação**.
 
 ---
 
 ## 🎯 Principais Funcionalidades
 - **Análise de Hábitos Transacionais:** Mapeamento de padrões de gastos, identificação de anomalias e apontamento de oportunidades de economia.
-- **Orientação de Investimentos:** Cruzamento de dados entre o `perfil_investidor.json` e o catálogo de `produtos_financeiros.json`.
-- **Alertas de Risco:** Notificação preventiva sobre movimentações atípicas registradas no histórico de transações (`transacoes.csv`).
-- **Arquitetura com Guardrails:** Restrição de respostas ao contexto fornecido na base de conhecimento, visando mitigar alucinações do modelo de linguagem.
+- **Orientação de Investimentos:** Cruzamento de dados entre o perfil do cliente e o catálogo oficial de produtos financeiros.
+- **Alertas de Risco:** Notificação preventiva sobre movimentações atípicas registradas no histórico.
+- **Arquitetura com Guardrails:** Restrição de respostas ao contexto fornecido na base de conhecimento, mitigando riscos de inferências incorretas.
+
+---
+
+## 📚 Documentação do Projeto
+A documentação foi estruturada em módulos para facilitar a auditoria e o entendimento da arquitetura. Acesse os links abaixo para navegar pelos detalhes técnicos:
+
+1. [**Documentação do Agente (Caso de Uso e Arquitetura)**](docs/01-documentacao-agente.md) 
+2. [Base de Conhecimento](docs/02-base-conhecimento.md) *(Pendente)*
+3. [Prompts do Agente](docs/03-prompts.md) *(Pendente)*
+4. [Métricas de Avaliação](docs/04-metricas.md) *(Pendente)*
+5. [Pitch de Apresentação](docs/05-pitch.md) *(Pendente)*
 
 ---
 
@@ -27,15 +38,7 @@ A solução analisa históricos de transações, hábitos de consumo e perfis de
 .
 ├── assets/                  # Diagramas e recursos visuais
 ├── data/                    # Base de conhecimento mockada (CSV / JSON)
-│   ├── transacoes.csv
-│   ├── historico_atendimento.csv
-│   ├── perfil_investidor.json
-│   └── produtos_financeiros.json
-├── docs/                    # Documentação detalhada da solução
-│   ├── 01-documentacao-agente.md
-│   ├── 02-base-conhecimento.md
-│   ├── 03-prompts.md
-│   ├── 04-metricas.md
-│   └── 05-pitch.md
+├── docs/                    # Artefatos de documentação detalhada
+│   └── 01-documentacao-agente.md
 ├── src/                     # Código-fonte do protótipo funcional
 └── README.md                # Documentação principal
