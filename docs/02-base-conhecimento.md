@@ -1,55 +1,34 @@
-# Base de Conhecimento
+# 📚 Base de Conhecimento: Estrutura e Governança de Dados
 
-## Dados Utilizados
-
-Descreva se usou os arquivos da pasta `data`, por exemplo:
-
-| Arquivo | Formato | Utilização no Agente |
-|---------|---------|---------------------|
-| `historico_atendimento.csv` | CSV | Contextualizar interações anteriores |
-| `perfil_investidor.json` | JSON | Personalizar recomendações |
-| `produtos_financeiros.json` | JSON | Sugerir produtos adequados ao perfil |
-| `transacoes.csv` | CSV | Analisar padrão de gastos do cliente |
-
-> [!TIP]
-> **Quer um dataset mais robusto?** Você pode utilizar datasets públicos do [Hugging Face](https://huggingface.co/datasets) relacionados a finanças, desde que sejam adequados ao contexto do desafio.
+## 1. Visão Geral
+Esta documentação detalha a estrutura dos dados utilizados para fundamentar as respostas do **BIA SafeGuard AI**. Os dados estão mockados na pasta `data/` e representam a **única fonte de verdade** para o agente, garantindo que as análises sejam precisas, rastreáveis e restritas ao escopo financeiro do cliente.
 
 ---
 
-## Adaptações nos Dados
+## 2. Dicionário de Dados
 
-> Você modificou ou expandiu os dados mockados? Descreva aqui.
+A arquitetura de dados foi dividida em quatro artefatos principais, separando informações transacionais, de relacionamento e catálogos de produtos.
 
-[Sua descrição aqui]
+### 2.1. Dados Transacionais (`data/transacoes.csv`)
+- **Descrição:** Registros de entradas e saídas financeiras. O agente consome esses dados para detectar anomalias, emitir alertas preventivos e analisar padrões de consumo.
+- **Campos Principais:** `id_transacao`, `data`, `categoria`, `valor`, `tipo` (credito/debito), `status`.
+
+### 2.2. Histórico de Relacionamento (`data/historico_atendimento.csv`)
+- **Descrição:** Base de chamados e interações anteriores do cliente com a instituição. Permite ao agente manter o contexto de solicitações passadas, garantindo um atendimento contínuo e sem redundâncias.
+- **Campos Principais:** `id_ticket`, `data`, `assunto`, `status`, `resolucao`.
+
+### 2.3. Perfil do Cliente (`data/perfil_investidor.json`)
+- **Descrição:** Mapeamento do apetite a risco, patrimônio atual e objetivos financeiros do cliente. O agente utiliza este artefato como **validador de conformidade** antes de qualquer recomendação.
+- **Estrutura Base:** `cliente_id`, `perfil_risco` (ex: Conservador, Moderado, Arrojado), `horizonte_investimento`, `objetivos`.
+
+### 2.4. Catálogo Oficial (`data/produtos_financeiros.json`)
+- **Descrição:** Portfólio de produtos e serviços de investimento autorizados pela instituição. 
+- **Estrutura Base:** `id_produto`, `nome`, `tipo_ativo`, `perfil_recomendado`, `nivel_risco`, `liquidez`.
 
 ---
 
-## Estratégia de Integração
+## 3. Fluxo de Utilização Segura (Data Ingestion & Guardrails)
+Para manter a conformidade com as diretrizes de segurança, o acesso e cruzamento desses dados seguem regras estritas:
 
-### Como os dados são carregados?
-> Descreva como seu agente acessa a base de conhecimento.
-
-[ex: Os JSON/CSV são carregados no início da sessão e incluídos no contexto do prompt]
-
-### Como os dados são usados no prompt?
-> Os dados vão no system prompt? São consultados dinamicamente?
-
-[Sua descrição aqui]
-
----
-
-## Exemplo de Contexto Montado
-
-> Mostre um exemplo de como os dados são formatados para o agente.
-
-```
-Dados do Cliente:
-- Nome: João Silva
-- Perfil: Moderado
-- Saldo disponível: R$ 5.000
-
-Últimas transações:
-- 01/11: Supermercado - R$ 450
-- 03/11: Streaming - R$ 55
-...
-```
+1. **Validação de Escopo (Match de Perfil):** O agente é programado para cruzar obrigatoriamente o `perfil_investidor.json` com os `produtos_financeiros.json`. Produtos com `perfil_recomendado` incompatível com o risco do cliente são automaticamente ocultados da resposta gerada.
+2. **Isolamento de Contexto:** Cada sessão de atendimento analisa estritamente os dados do cliente em questão. Não há compartilhamento de parâmetros ou histórico entre sessões distintas, simulando diretrizes reais de privacidade.
