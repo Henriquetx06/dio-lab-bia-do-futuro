@@ -26,7 +26,7 @@ A documentação foi estruturada em módulos para facilitar a auditoria e o ente
 
 1. [**Documentação do Agente (Caso de Uso e Arquitetura)**](docs/01-documentacao-agente.md) 
 2. [Base de Conhecimento](docs/02-base-conhecimento.md) 
-3. [Prompts do Agente](docs/03-prompts.md) *(Pendente)*
+3. [Prompts do Agente](docs/03-prompts.md) 
 4. [Métricas de Avaliação](docs/04-metricas.md) *(Pendente)*
 5. [Pitch de Apresentação](docs/05-pitch.md) *(Pendente)*
 
