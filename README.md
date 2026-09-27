@@ -25,7 +25,7 @@ A solução analisa históricos de transações, hábitos de consumo e perfis de
 A documentação foi estruturada em módulos para facilitar a auditoria e o entendimento da arquitetura. Acesse os links abaixo para navegar pelos detalhes técnicos:
 
 1. [**Documentação do Agente (Caso de Uso e Arquitetura)**](docs/01-documentacao-agente.md) 
-2. [Base de Conhecimento](docs/02-base-conhecimento.md) *(Pendente)*
+2. [Base de Conhecimento](docs/02-base-conhecimento.md) 
 3. [Prompts do Agente](docs/03-prompts.md) *(Pendente)*
 4. [Métricas de Avaliação](docs/04-metricas.md) *(Pendente)*
 5. [Pitch de Apresentação](docs/05-pitch.md) *(Pendente)*
